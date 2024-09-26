@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
-import { interval, switchMap } from "rxjs";
+import { interval, lastValueFrom, switchMap } from "rxjs";
 import { fromPromise } from "rxjs/internal/observable/innerFrom";
 import { MinIoFileUrl } from '../api/models';
 import { MinIoComsService, PingPongControllerService } from '../api/services';
@@ -15,7 +15,7 @@ export class Oauth2AuthService {
 
   constructor(private httpClient: HttpClient, private minIoComsService: MinIoComsService,private pingPongControllerService:PingPongControllerService){}
 
-
+  private hasProfilePicture = false;
 
   get kc() {
     if (!this._keycloak) {
@@ -29,7 +29,6 @@ export class Oauth2AuthService {
   }
 
   private _profile: UserProfile | undefined;
-
   MIN_TOKEN_VALIDITY = 60000;
 
   get profile(): UserProfile | undefined {
@@ -77,34 +76,33 @@ export class Oauth2AuthService {
     });
   }
 
-  async getMyPfp(){
-    try{
-      if(this._profile){
-        if(this._profile.profilePicture){
-          return this._profile.profilePicture;
-        }else{
-            this.minIoComsService.getMyProfilePicture().subscribe(async (res) => {
 
-            const jsonResponse = await (res as Blob).text();
-            const profilePictureData = JSON.parse(jsonResponse);
-            this._profile!.profilePicture = profilePictureData.body;
-            next:(res:MinIoFileUrl) => {
-              const getMyProfilePictureResponse:MinIoFileUrl = res;
-              console.log(getMyProfilePictureResponse);
 
-            }
-            });
-          return this._profile.profilePicture;
+async getMyPfp() {
+  try {
+    if (this._profile) {
+      if (this._profile.profilePicture) {
+        return this._profile.profilePicture;
+      } else {
+        const response = await lastValueFrom(this.minIoComsService.getMyProfilePicture$Response());
+        const fileUrl: MinIoFileUrl = response.body;
+        if (fileUrl && fileUrl.url) {
+          this._profile!.profilePicture = fileUrl.url;
+          this.hasProfilePicture = true;
+        } else {
+          console.log(fileUrl.status);
         }
-      }else{
-        return undefined;
+
+        return this._profile?.profilePicture;
       }
-    }catch(error){
-      console.error("erro ao fazer pingpong",error);
+    } else {
       return undefined;
     }
+  } catch (error) {
+    console.error('Erro ao pegar a imagem de perfil', error);
+    return undefined;
   }
-
+}
   Oauth2login() {
     return this.kc.login();
   }

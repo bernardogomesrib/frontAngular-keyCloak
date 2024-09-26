@@ -16,4 +16,3 @@ export { Tag } from './models/tag';
 export { TextAnswer } from './models/text-answer';
 export { User } from './models/user';
 export { UserAnswerToQuiz } from './models/user-answer-to-quiz';
-
