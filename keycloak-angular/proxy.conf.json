@@ -1,0 +1,11 @@
+{
+  "/api":{
+    "target": "http://localhost:9080",
+    "secure": false
+  },
+  "/quiz/apiv3":{
+    "target": "http://localhost:8080",
+    "secure": true
+  }
+
+}
