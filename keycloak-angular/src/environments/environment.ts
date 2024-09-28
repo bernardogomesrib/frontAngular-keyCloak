@@ -7,7 +7,7 @@ export const environment = {
     realm: "quiz",
     clientId: "quiz"
   },
-  apiUrl: public_ip+":8080",
+  apiUrl: public_ip+":3000",
   fileserverUrl: public_ip+":9090",
   logoUrl: public_ip+":9090/api/v1/buckets/public/objects/download?preview=true&prefix=logo.png",
 };
