@@ -18,9 +18,12 @@ export class Oauth2AuthService {
   private hasProfilePicture = false;
 
   get kc() {
+
     if (!this._keycloak) {
+      const location = window.location.href.split(":");
+      console.log(location[0]+":"+location[1]);
       this._keycloak = new Keycloak({
-        url: environment.keycloak.url,
+        url: location[0]+":"+location[1]+":9080",
         realm: environment.keycloak.realm,
         clientId: environment.keycloak.clientId,
       });
@@ -50,7 +53,6 @@ export class Oauth2AuthService {
         localStorage.setItem('refresh_token', this.kc.refreshToken || '');
         await this.getMyPfp();
         this.initUpdateTokenRefresh();
-
       }else{
         console.log("keycloak não autenticado");
       }

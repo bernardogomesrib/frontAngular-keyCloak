@@ -1,39 +1,11 @@
+<app-navbar></app-navbar>
 <h1 class="text-3xl font-bold underline text-gray-500">
   Hello world!
 </h1>
-<div>
-    <button class="h-5">botão</button>
-    <div [contentEditable]="isEditable" class="black"></div>
-    <ButtonAngular *ngIf="isLogado" (onClick)="logout()"  [label]="'Logout'" [disabled]="false" [type]="'button'" />
-    <ButtonAngular *ngIf="!isLogado" (onClick)="login()"  [label]="'Login'" [disabled]="false" [type]="'button'" />
+<div class="">
+    <button class="h-5">botão</button> <br>
+    <!-- <div [contentEditable]="isEditable" class="black"></div> -->
 
-    <div *ngIf="isLogado">
-        <h1>Logado</h1> <br>
-        id: {{profile?.id}} <br>
-        você é: {{profile?.firstName + ' ' + profile?.lastName}} <br>
-        seu email é: {{profile?.email}} <br>
-        seu token é: <br>
-
-        {{profile?.token}}
-        <br>
-        <ButtonAngular (onClick)="profilePage()"  [label]="'Profile'" [disabled]="false" [type]="'button'" />
-
-
-        <div *ngFor="let key of profile?.roles">
-            role: {{key}}
-        </div>
-
-        <div *ngIf="isLogado">
-          <div *ngIf="profile.profilePicture"><img src={{profile.profilePicture}} alt="profile picture"/></div>
-          <div *ngIf="!profile.profilePicture">
-            <!-- <form (ngSubmit)="postNewProfilePicture(form)" #form="ngForm">
-              <input type="file" name="file" title="Choose a profile picture" placeholder="Choose a file" (change)="onFileChange($event)" />
-              <button type="submit">Enviar</button>
-            </form> -->
-          </div>
-          <!-- <form action="" method="post"></form> -->
-        </div>
-        </div>
     </div>
 
 

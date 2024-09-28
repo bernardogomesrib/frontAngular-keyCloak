@@ -6,7 +6,16 @@
 :root {
   --color-primary: #3490dc;
   --color-secondary: #ffed4a;
-  --primary: #3490dc;
+  --primary: #2517e2;
   --primary-hover: #3490dcef;
   --secondary: #ffed4a;
+  --text-colorNavbar: #ffffff;
+  --navbarColor: #3490dc;
+  --colorBody: #3d3b3b;
+  --text-colorBody: #81878f;
+
+}
+body{
+  background-color: var(--colorBody);
+  color: var(--text-colorBody);
 }
