@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = environment.public_ip+':4200/v3/api-docs';
+  rootUrl: string = environment.public_ip+':4200/api';
 }
 
 /**
